@@ -5,7 +5,7 @@ import individualUserCardStyles from './individualUserCardStyles';
 import axios from 'axios';
 import authorizationHeader from '../../constants/authorizationHeader';
 
-export default function IndividualUserCard({login, avatar_url, followers_url, repos_url}){
+export default function IndividualUserCard({login, avatar_url, followers_url, repos_url, navigation}){
     const [followers, setFollowers] = React.useState([]);
     const [repositories, setRepositories] = React.useState([]);
 
@@ -31,7 +31,11 @@ export default function IndividualUserCard({login, avatar_url, followers_url, re
     }, [])
 
     return(
-        <TouchableOpacity onPress={() => {}} style={individualUserCardStyles.container}>
+        <TouchableOpacity onPress={() => {navigation.navigate("SingleResultPage", {
+            followers: followers,
+            repositories: repositories,
+            login: login
+        })}} style={individualUserCardStyles.container}>
             <View style={individualUserCardStyles.leftContainer}>
                 <Image style={individualUserCardStyles.imageStyle}
                        source={{uri: avatar_url}}/>

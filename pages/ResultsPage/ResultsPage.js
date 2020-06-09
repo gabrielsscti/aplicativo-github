@@ -8,7 +8,7 @@ import BackgroundImage from '../../components/BackgroundImage/BackgroundImage'
 import UserCardList from '../../components/UserCardList/UserCardList';
 import authorizationHeader from '../../constants/authorizationHeader';
 
-export default function ResultsPage(){
+export default function ResultsPage({navigation}){
     const [results, setResults] = React.useState([]);
     const [isFetching, setIsFetching] = React.useState(false);
 
@@ -32,7 +32,7 @@ export default function ResultsPage(){
             <SearchBar onSubmit = {fetchUsersByNickname} style={resultsStyles.searchArea}/>
             <View style={resultsStyles.resultsArea}>
                 <BackgroundImage isFetching = {isFetching}/>
-                <UserCardList users={results}/>
+                <UserCardList navigation={navigation} users={results}/>
             </View>
         </View>
     )
