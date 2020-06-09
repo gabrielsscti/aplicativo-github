@@ -5,9 +5,10 @@ const individualUserCardStyles = StyleSheet.create({
         flex:1,
         flexDirection:'row',
         margin:10,
-        borderBottomWidth:2,
-        borderBottomColor:'black',
-        paddingBottom:5
+        borderBottomWidth:0.5,
+        borderBottomColor:'grey',
+        paddingBottom:5,
+        borderRadius:10
     },
     leftContainer: {
         flex:2,

@@ -3,6 +3,7 @@ import {View, Image, Text, TouchableOpacity} from 'react-native';
 import generalStyles from '../../generalStyles';
 import individualUserCardStyles from './individualUserCardStyles';
 import axios from 'axios';
+import authorizationHeader from '../../constants/authorizationHeader';
 
 export default function IndividualUserCard({login, avatar_url, followers_url, repos_url}){
     const [followers, setFollowers] = React.useState([]);
@@ -10,11 +11,19 @@ export default function IndividualUserCard({login, avatar_url, followers_url, re
 
     React.useEffect(() => {
         try{
-            axios.get(followers_url).then(items => {
+            axios.get(followers_url,authorizationHeader).then(items => {
                 setFollowers([...items.data]);
+            }).catch(err => {
+                console.log("Erro na request de followers: ")
+                console.log(followers_url)
+                console.log(err)
             })
-            axios.get(repos_url).then(items => {
+            axios.get(repos_url, authorizationHeader).then(items => {
                 setRepositories([...items.data]);
+            }).catch(err => {
+                console.log("Erro na request de repositórios: ")
+                console.log(repos_url)
+                console.log(err)
             })
         }catch(error){
             console.log(error)

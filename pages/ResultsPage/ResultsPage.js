@@ -6,6 +6,7 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import github from '../../apis/github'
 import BackgroundImage from '../../components/BackgroundImage/BackgroundImage'
 import UserCardList from '../../components/UserCardList/UserCardList';
+import authorizationHeader from '../../constants/authorizationHeader';
 
 export default function ResultsPage(){
     const [results, setResults] = React.useState([]);
@@ -15,7 +16,7 @@ export default function ResultsPage(){
     const fetchUsersByNickname = (query) => {
         try{
             setIsFetching(true);
-            github.get(`/search/users?q=${query}`).then(results => {
+            github.get(`/search/users?q=${query}`,authorizationHeader).then(results => {
                 setResults([...results.data.items])
                 setIsFetching(false);
             }).catch(err => {
