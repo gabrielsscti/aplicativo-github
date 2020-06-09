@@ -1,14 +1,38 @@
 import * as React from 'react';
-import {View} from 'react-native';
+import {View, ScrollView, Text, Image, Animated} from 'react-native';
 import pagesStyles from '../pagesStyles';
 import resultsStyles from './resultsStyles';
 import SearchBar from '../../components/SearchBar/SearchBar';
+import github from '../../apis/github'
+import BackgroundImage from '../../components/BackgroundImage/BackgroundImage'
+import UserCardList from '../../components/UserCardList/UserCardList';
 
 export default function ResultsPage(){
+    const [results, setResults] = React.useState([]);
+    const [isFetching, setIsFetching] = React.useState(false);
+
+
+    const fetchUsersByNickname = (query) => {
+        try{
+            setIsFetching(true);
+            github.get(`/search/users?q=${query}`).then(results => {
+                setResults([...results.data.items])
+                setIsFetching(false);
+            }).catch(err => {
+                console.log("First catch " + err);
+            })
+        }catch(error){
+            console.log("Second catch " + error);
+        }
+    }
+    
     return(
         <View style = {pagesStyles.container}>
-            <SearchBar style={{flex: 1}}/>
-            <View style={{flex: 8}}></View>
+            <SearchBar onSubmit = {fetchUsersByNickname} style={resultsStyles.searchArea}/>
+            <View style={resultsStyles.resultsArea}>
+                <BackgroundImage isFetching = {isFetching}/>
+                <UserCardList users={results}/>
+            </View>
         </View>
     )
 }
